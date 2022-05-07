@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld msg="message"/>
     <img alt="Vue logo" src="../assets/logo.png">
 
   </div>
@@ -14,6 +14,8 @@ export default {
   name: 'HomeView',
   components: {
     HelloWorld
+  },
+  data(){
   }
 }
 </script>
