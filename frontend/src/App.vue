@@ -1,28 +1,181 @@
+
+
 <template>
-  <router-view/>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <header>
+  <nav class="navbar" id="top-nav">
+    <div class="container-fluid justify-content-center">
+      <div id="title" > 玉山歌唱大賽 </div>
+    </div>
+    <div class="container-fluid justify-content-center">
+      <div id="time-middle">目前時間: {{Local_time}}</div>
+    </div>
+    <div class="container-fluid justify-content-center">
+     <div id="time-middle">
+        <div>倒數計時: {{time_span_object.hours_remaining}}</div>
+          <p class="minute-second">時&nbsp;&nbsp;</p>
+          <div>{{time_span_object.minutes_remaining}}</div>
+          <p class="minute-second">分&nbsp;&nbsp;</p> 
+          <div>{{time_span_object.seconds_remaining}}</div>
+        <div class="minute-second">秒</div>
+      </div>
+    </div>
+  </nav> 
+  </header>
+  <body>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div><div>
+      ddddd
+    </div>
+    <div>
+      ddddd
+    </div>
+
+    <RouterView/>
+  </body>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+<style>
+#top-nav {
+  position: fixed;
+  background-color: rgb(255, 235, 235);
+  border-bottom:1px solid rgb(180, 180, 180);
+  height:140px;
+  width: 100%;
+  font-size: 30px;
+  padding-left:20px;
+  padding-right:20px;
   text-align: center;
-  color: #2c3e50;
 }
 
-nav {
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+header + body{
+    padding-top: 140px;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#login, #enroll{
+  margin-right: 10px;
+  border-radius: 5px;
+}
+#time-middle{
+  display: flex;
+
+}
+
+.minute-second{
+  font-size: 15px;
+  margin-top: 20px;
 }
 </style>
+
+<script>
+export default {
+  data() {
+    return {
+      // 注意 month 0= January, ...
+      start : new Date(2022,4,28,13,0,0),
+      end : new Date(2022,4,28,17,0,0),
+    }
+  },
+  computed:{
+      time_span_object:{
+        get(){
+        let time_span = (this.end - this.start)/1000;
+        let hours_remaining = Math.floor(time_span/3600);
+        let minutes_remaining = Math.floor(time_span/60-hours_remaining*60);
+        let seconds_remaning = Math.floor(time_span-hours_remaining*3600-minutes_remaining*60);
+        let return_object = {
+          "time_span":time_span,
+          "hours_remaining":hours_remaining,
+          "minutes_remaining":minutes_remaining,
+          "seconds_remaining":seconds_remaning,
+        }
+          return return_object 
+        }
+      },
+      Local_time:{
+        get(){
+          return this.start.toLocaleString()
+        }
+      } 
+  },
+  methods:{
+      countDownTimer () {
+      if (this.start != this.end) {
+          setTimeout(() => {
+              this.start = new Date(this.start.getFullYear(),this.start.getMonth(), this.start.getDate(),this.start.getHours(),this.start.getMinutes(),this.start.getSeconds()+1)
+              this.countDownTimer()
+          }, 1000)
+      }
+    }
+  },
+  created() {
+    // update the time every second
+    this.countDownTimer();
+  }
+}
+</script>
