@@ -22,85 +22,18 @@
   </nav> 
   </header>
   <body>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div><div>
-      ddddd
-    </div>
-    <div>
-      ddddd
-    </div>
-
     <RouterView/>
   </body>
 </template>
 
 
-<style>
+<style scoped>
+header + body{
+    padding: 20px;
+    padding-top: 160px;
+}
+
+
 #top-nav {
   position: fixed;
   background-color: rgb(255, 235, 235);
@@ -111,10 +44,6 @@
   padding-left:20px;
   padding-right:20px;
   text-align: center;
-}
-
-header + body{
-    padding-top: 140px;
 }
 
 #login, #enroll{
