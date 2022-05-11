@@ -22,7 +22,7 @@
   </nav> 
   </header>
   <body>
-    <RouterView/>
+    <RouterView :start = "start"/>
   </body>
 </template>
 
@@ -66,8 +66,13 @@ export default {
   data() {
     return {
       // 注意 month 0= January, ...
-      start : new Date(2022,4,28,13,0,0),
-      end : new Date(2022,4,28,17,0,0),
+      // current: new Date(),
+      current: new Date(2022, 4, 28, 12,59,50),
+      start : new Date(2022,4,28,13 ,0 ,0),
+      end: new Date(2022,4 ,28, 13, 0,10),
+      event_start : false,
+      event_over:false,
+      // end : new Date(2022,4,28,17,0,0),
     }
   },
   computed:{
@@ -90,15 +95,27 @@ export default {
         get(){
           return this.start.toLocaleString()
         }
-      } 
+      },
+      // event_start:{
+      //   get(){
+      //     // let whether_start = this.current.
+      //     // return this.start.getHours
+      //   }
+      // } 
   },
   methods:{
       countDownTimer () {
-      if (this.start != this.end) {
+      if (this.event_start != true){
+        setTimeout(() => {
+          this.countDownTimer()
+          }, 1000)
+      }else if (this.start.getHours() != this.end.getHours() | this.start.getMinutes() != this.end.getMinutes() | this.start.getSeconds() != this.end.getSeconds()) {
           setTimeout(() => {
               this.start = new Date(this.start.getFullYear(),this.start.getMonth(), this.start.getDate(),this.start.getHours(),this.start.getMinutes(),this.start.getSeconds()+1)
               this.countDownTimer()
           }, 1000)
+      }else{
+        this.event_over = true
       }
     }
   },

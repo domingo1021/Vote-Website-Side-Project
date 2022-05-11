@@ -1,11 +1,15 @@
 <template>
   <div class="home">
+    <div>
+      {{start}}, 可以用 v-if 來去控制 Date 超過多少的時候會有什麼 Layout
+    </div>
     <div v-for="(image,index) in images" :key="index">
       <div class="one-profile">
         <img :src="image.url" :alt="index" :key='index'/>
         <div class="description">
           <div>名字: {{image.description.name}}</div>
           <div>歌名: {{image.description.song_name}}</div>
+          <!-- <button id="vote" v-if="object_.valid_score">投票</button> -->
         </div>
       </div>
     </div>
@@ -28,12 +32,27 @@ img {
   width: 30%;
   float:left
 }
-
+#vote{
+  margin: 5px;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgb(157, 255, 132);
+}
+#vote:active{
+  margin: 5px;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgb(90, 148, 75);
+}
 </style>
 
 <script>
 export default {
   name: 'HomeView',
+  props:{
+    start: Date,
+    
+  },
   data(){
     return{
         images: [
@@ -60,6 +79,9 @@ export default {
           },
         ]
     }
+  },
+  created(){
+    console.log(this.start)
   }
 }
 </script>
