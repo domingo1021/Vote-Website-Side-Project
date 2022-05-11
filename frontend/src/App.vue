@@ -22,7 +22,7 @@
   </nav> 
   </header>
   <body>
-    <RouterView :start = "start"/>
+    <RouterView :current = "current" :during_event = "during_event"/>
   </body>
 </template>
 
@@ -67,11 +67,10 @@ export default {
     return {
       // 注意 month 0= January, ...
       // current: new Date(),
-      current: new Date(2022, 4, 28, 12,59,50),
-      start : new Date(2022,4,28,13 ,0 ,0),
-      end: new Date(2022,4 ,28, 13, 0,10),
-      event_start : false,
-      event_over:false,
+      current: new Date(2022, 4, 28, 12,59, 55),
+      start : new Date(2022,4,28,13 ,0 , 0),
+      end: new Date(2022,4 ,28, 13, 0, 5),
+      during_event : false
       // end : new Date(2022,4,28,17,0,0),
     }
   },
@@ -93,7 +92,7 @@ export default {
       },
       Local_time:{
         get(){
-          return this.start.toLocaleString()
+          return this.current.toLocaleString()
         }
       },
       // event_start:{
@@ -105,17 +104,23 @@ export default {
   },
   methods:{
       countDownTimer () {
-      if (this.event_start != true){
-        setTimeout(() => {
-          this.countDownTimer()
-          }, 1000)
-      }else if (this.start.getHours() != this.end.getHours() | this.start.getMinutes() != this.end.getMinutes() | this.start.getSeconds() != this.end.getSeconds()) {
+      if (this.during_event != true){
           setTimeout(() => {
-              this.start = new Date(this.start.getFullYear(),this.start.getMonth(), this.start.getDate(),this.start.getHours(),this.start.getMinutes(),this.start.getSeconds()+1)
-              this.countDownTimer()
+            this.current = new Date(this.current.getFullYear(),this.current.getMonth(), this.current.getDate(),this.current.getHours(),this.current.getMinutes(),this.current.getSeconds()+1)
+            if(this.current.getHours() == this.start.getHours() && this.current.getMinutes()==this.start.getMinutes() && this.current.getSeconds()==this.start.getSeconds()){
+              this.during_event = true
+            }
+            this.countDownTimer()
           }, 1000)
       }else{
-        this.event_over = true
+          setTimeout(() => {
+            this.current = new Date(this.current.getFullYear(),this.current.getMonth(), this.current.getDate(),this.current.getHours(),this.current.getMinutes(),this.current.getSeconds()+1)
+            this.start = this.current
+            if(this.start.getHours() == this.end.getHours() && this.start.getMinutes()==this.end.getMinutes() && this.start.getSeconds()==this.end.getSeconds()){
+              this.during_event = false
+            }
+            this.countDownTimer()
+          }, 1000)
       }
     }
   },

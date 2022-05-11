@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <div>
-      {{start}}, 可以用 v-if 來去控制 Date 超過多少的時候會有什麼 Layout
+    <div v-if="!voted">
+      <br>
+    </div>
+    <div v-else>
+      你即將投給 --{{target_person}}-- 明日之星
     </div>
     <div v-for="(image,index) in images" :key="index">
       <div class="one-profile">
@@ -9,7 +12,16 @@
         <div class="description">
           <div>名字: {{image.description.name}}</div>
           <div>歌名: {{image.description.song_name}}</div>
-          <!-- <button id="vote" v-if="object_.valid_score">投票</button> -->
+          <div v-if="!voted">
+            <button v-if="during_event" id="vote" @click="clickVote(image.description.name)">投票</button>
+            <button v-else id="cant-vote">投票</button>
+          </div>
+          <div v-else>
+            <button v-if="during_event" id="voted" @click="cancelVote()">取消投票</button> 
+            <button v-else id="cant-vote">取消投票</button>
+            <div>已投票</div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -44,17 +56,31 @@ img {
   border-radius: 5px;
   background-color: rgb(90, 148, 75);
 }
+#cant-vote{
+  margin: 5px;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgb(206, 206, 206);
+}
+#voted{
+  margin: 5px;
+  font-size: 10px;
+  border-radius: 5px;
+  background-color: rgb(255, 100, 100);
+}
 </style>
 
 <script>
 export default {
   name: 'HomeView',
   props:{
-    start: Date,
-    
+    current: Date,
+    during_event: Boolean,
   },
   data(){
     return{
+        voted: false,
+        target_person:"",
         images: [
           { url: require("@/assets/man_1.jpeg"),
             alt: "man1", 
@@ -79,9 +105,14 @@ export default {
           },
         ]
     }
+  },methods:{
+    clickVote(person){
+      this.voted = true
+      this.target_person = person
+    },
+    cancelVote(){
+      this.voted = false
+    }
   },
-  created(){
-    console.log(this.start)
-  }
 }
 </script>
